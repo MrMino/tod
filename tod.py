@@ -1,5 +1,3 @@
-import sys
-
 from prompt_toolkit import Application
 from prompt_toolkit.layout import Layout
 from prompt_toolkit.styles import Style
@@ -29,7 +27,7 @@ class TUI(Application):
         )
 
     def kb_exit_gracefully(self, _):
-        sys.exit(0)
+        self.exit(0)
 
 
 TUI().run()
