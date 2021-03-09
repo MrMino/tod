@@ -77,12 +77,27 @@ class TUI(Application):
         key_bindings.add('c-d')(self.kb_exit_gracefully)
         key_bindings.add('c-c')(self.kb_exit_gracefully)
 
+        key_bindings.add('f12')(self.kb_debug)
+
+        key_bindings.add('up')(self.kb_item_up)
+        key_bindings.add('down')(self.kb_item_down)
+
         super().__init__(
             layout, style, key_bindings=key_bindings, full_screen=True
         )
 
     def kb_exit_gracefully(self, _):
         self.exit(0)
+
+    def kb_debug(self, _):
+        breakpoint()
+
+    def kb_item_up(self, _):
+        self.placeholder_style.bold = not self.placeholder_style.bold
+        self.invalidate()
+
+    def kb_item_down(self, _):
+        pass
 
 
 TUI().run()
