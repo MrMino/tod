@@ -59,11 +59,16 @@ class MutableStyle(Style):
 
 class TUI(Application):
     def __init__(self):
-        layout = Layout(
-            Label(HTML("<placeholder>Placeholder</placeholder>"))
+        self.placeholder_label = Label(
+            HTML("<placeholder>Placeholder</placeholder>")
         )
-        style = Style([
-            ('placeholder', 'grey')
+        self.placeholder_style = MutableRule('placeholder', 'grey', bold=False)
+
+        layout = Layout(
+            self.placeholder_label,
+        )
+        style = MutableStyle([
+            self.placeholder_style,
         ])
         key_bindings = KeyBindings()
 
