@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from prompt_toolkit import Application
 from prompt_toolkit.layout import Layout
 from prompt_toolkit.styles import Style
@@ -55,6 +57,13 @@ class MutableRule:
 class MutableStyle(Style):
     def invalidation_hash(self):
         return hash(tuple(self.style_rules))
+
+
+@dataclass
+class Task:
+    summary: str
+    description: str
+    color: str
 
 
 class TUI(Application):
