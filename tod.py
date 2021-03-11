@@ -5,7 +5,7 @@ from prompt_toolkit.layout import Layout
 from prompt_toolkit.styles import Style
 from prompt_toolkit.key_binding import KeyBindings
 
-from prompt_toolkit.formatted_text import HTML
+from prompt_toolkit.formatted_text import HTML, FormattedText
 from prompt_toolkit.widgets import Label
 
 from typing import Optional
@@ -64,6 +64,17 @@ class Task:
     summary: str
     description: str
     color: str
+
+
+HR_BAR = ('grey', '—' * 20)
+
+
+class TaskCard(Label):
+    def __init__(self, task):
+        self.selected = False
+        self._task = task
+        self._summary_style = (
+            f"{self._task.color} {'bold' if self.selected else ''}"
 
 
 class TUI(Application):
