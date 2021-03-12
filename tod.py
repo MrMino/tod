@@ -20,10 +20,13 @@ class Task:
     color: str
 
 
+placeholder = Task('No tasks yet...', '', 'grey')
+
+
 class TaskList(HSplit):
-    def __init__(self, tasks: Optional[List[Task]], wrap=True):
+    def __init__(self, tasks: Optional[List[Task]] = None, wrap=True):
         if tasks is None:
-            tasks = []
+            tasks = [placeholder]
 
         self._cards = [TaskCard(task) for task in tasks]
 
@@ -100,7 +103,7 @@ class TUI(Application):
             Task('task3, summary', "Longer description", "lightgreen"),
             Task('task4, summary', "Longer description", "darkred"),
             Task('task5, summary', "Longer description", "gray"),
-            Task('task6, summary', "Longer description", "magenta"),
+            Task('task6, summary', "Longer description", "darkmagenta"),
         ]
         self.tasklist = TaskList(tasks)
 
