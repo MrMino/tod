@@ -185,11 +185,10 @@ class TUI(Application):
         breakpoint()
 
     def kb_item_up(self, _):
-        self.placeholder_style.bold = not self.placeholder_style.bold
-        self.invalidate()
+        self.tasklist.prev()
 
     def kb_item_down(self, _):
-        pass
+        self.tasklist.next()
 
 
 TUI().run()
