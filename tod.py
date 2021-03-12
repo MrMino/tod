@@ -121,20 +121,46 @@ class TaskCard(Label):
         self._task = task
         self._summary_style = (
             f"{self._task.color} {'bold' if self.selected else ''}"
+        )
+        super().__init__(self.contents)
+
+    def contents(self):
+        return self._multiline() if self.selected else self._oneline()
+
+    def _oneline(self):
+        return FormattedText([
+            (self._summary_style, f"   {self._task.summary}"),
+        ])
+
+    def _multiline(self):
+        return FormattedText([
+            (self._summary_style, f" ▷ {self._task.summary}"),
+            ('', f"\n\n{self._task.description}\n"),
+            HR_BAR
+        ])
+
+
+placeholder = Label(HTML("<placeholder>Placeholder</placeholder>"))
+placeholder_style = MutableRule('placeholder', 'grey', bold=False)
 
 
 class TUI(Application):
     def __init__(self):
-        self.placeholder_label = Label(
-            HTML("<placeholder>Placeholder</placeholder>")
-        )
-        self.placeholder_style = MutableRule('placeholder', 'grey', bold=False)
+        tasks = [
+            Task('task1, summary', "Longer description", "lightblue"),
+            Task('task2, summary', "Longer description", "orange"),
+            Task('task3, summary', "Longer description", "lightgreen"),
+            Task('task4, summary', "Longer description", "darkred"),
+            Task('task5, summary', "Longer description", "gray"),
+            Task('task6, summary', "Longer description", "magenta"),
+        ]
+        self.tasklist = TaskList(tasks)
 
         layout = Layout(
-            self.placeholder_label,
+            self.tasklist
         )
         style = MutableStyle([
-            self.placeholder_style,
+            placeholder_style,
         ])
         key_bindings = KeyBindings()
 
