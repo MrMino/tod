@@ -92,10 +92,6 @@ class TaskCard(Label):
         ])
 
 
-placeholder = Label(HTML("<placeholder>Placeholder</placeholder>"))
-placeholder_style = MutableRule('placeholder', 'grey', bold=False)
-
-
 class TUI(Application):
     def __init__(self):
         tasks = [
@@ -111,8 +107,7 @@ class TUI(Application):
         layout = Layout(
             self.tasklist
         )
-        style = MutableStyle([
-            placeholder_style,
+        style = Style([
         ])
         key_bindings = KeyBindings()
 
