@@ -8,7 +8,9 @@ from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.formatted_text import HTML, FormattedText
 from prompt_toolkit.widgets import Label
 
-from typing import Optional
+from prompt_toolkit.layout.containers import HSplit
+
+from typing import Optional, List
 
 
 class MutableRule:
@@ -64,6 +66,50 @@ class Task:
     summary: str
     description: str
     color: str
+
+
+class TaskList(HSplit):
+    def __init__(self, tasks: Optional[List[Task]], wrap=True):
+        if tasks is None:
+            tasks = []
+
+        self._cards = [TaskCard(task) for task in tasks]
+
+        self._selected = 0
+        self._cards[self._selected].selected = True
+
+        self.wrap = wrap
+
+        super().__init__(self._cards)
+
+    @property
+    def selected(self):
+        return self._selected
+
+    @selected.setter
+    def selected(self, idx: int):
+        assert 0 <= idx < len(self._cards)
+        self._cards[self._selected].selected = False
+        self._selected = idx
+        self._cards[self._selected].selected = True
+
+    def next(self):
+        if self.selected == len(self._cards) - 1:
+            if self.wrap:
+                self.selected = 0
+            else:
+                return
+        else:
+            self.selected += 1
+
+    def prev(self):
+        if self.selected == 0:
+            if self.wrap:
+                self.selected = len(self._cards) - 1
+            else:
+                return
+        else:
+            self.selected -= 1
 
 
 HR_BAR = ('grey', '—' * 20)
