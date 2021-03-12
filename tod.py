@@ -13,54 +13,6 @@ from prompt_toolkit.layout.containers import HSplit
 from typing import Optional, List
 
 
-class MutableRule:
-    def __init__(self,
-                 class_name: str,
-                 color: Optional[str] = '',
-                 bgcolor: Optional[str] = '',
-                 bold: Optional[bool] = False,
-                 underline: Optional[bool] = False,
-                 italic: Optional[bool] = False,
-                 blink: Optional[bool] = False,
-                 reverse: Optional[bool] = False,
-                 hidden: Optional[bool] = False):
-        self._class_name = class_name
-        self.color = color
-        self.bgcolor = bgcolor
-        self.bold = bold
-        self.underline = underline
-        self.italic = italic
-        self.blink = blink
-        self.reverse = reverse
-        self.hidden = hidden
-
-    @property
-    def class_name(self):
-        return self._class_name
-
-    def __str__(self):
-        return (self.color
-                + (f' {self.bgcolor}' if self.bgcolor else '')
-                + (' bold' if self.bold else '')
-                + (' underline' if self.underline else '')
-                + (' italic' if self.italic else '')
-                + (' blink' if self.blink else '')
-                + (' reverse' if self.reverse else '')
-                + (' hidden' if self.hidden else ''))
-
-    # Required for MutableStyle.invalidation_hash() to update.
-    def __hash__(self):
-        return id(str(self))
-
-    def __iter__(self):
-        return iter([self.class_name, str(self)])
-
-
-class MutableStyle(Style):
-    def invalidation_hash(self):
-        return hash(tuple(self.style_rules))
-
-
 @dataclass
 class Task:
     summary: str
