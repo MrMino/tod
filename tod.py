@@ -133,6 +133,7 @@ class TUI(Application):
 
         key_bindings.add('up')(self.kb_item_up)
         key_bindings.add('down')(self.kb_item_down)
+        key_bindings.add('enter')(self.kb_run_action)
 
         super().__init__(
             layout, style, key_bindings=key_bindings, full_screen=True
@@ -149,6 +150,9 @@ class TUI(Application):
 
     def kb_item_down(self, _):
         self.tasklist.next()
+
+    def kb_run_action(self, _):
+        self.tasklist.selected_card.run_action()
 
 
 TUI().run()
