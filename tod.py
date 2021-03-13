@@ -10,7 +10,7 @@ from prompt_toolkit.widgets import Label
 
 from prompt_toolkit.layout.containers import HSplit
 
-from typing import Optional, List
+from typing import Optional, List, Callable, Any
 
 
 @dataclass
@@ -18,6 +18,7 @@ class Task:
     summary: str
     description: str
     color: str
+    action: Optional[Callable[['Task'], Any]] = None
 
 
 placeholder = Task('No tasks yet...', '', 'grey')
