@@ -100,6 +100,8 @@ class TaskCard(Label):
         ])
 
     def run_action(self):
+        if self._task.action is None:
+            return
         return self._task.action(self._task)
 
 
