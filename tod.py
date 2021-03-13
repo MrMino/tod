@@ -31,41 +31,45 @@ class TaskList(HSplit):
 
         self._cards = [TaskCard(task) for task in tasks]
 
-        self._selected = 0
-        self._cards[self._selected].selected = True
+        self._selected_idx = 0
+        self._cards[self._selected_idx].selected = True
 
         self.wrap = wrap
 
         super().__init__(self._cards)
 
     @property
-    def selected(self):
-        return self._selected
+    def selected_card(self):
+        return self._cards[self.selected_idx]
 
-    @selected.setter
-    def selected(self, idx: int):
+    @property
+    def selected_idx(self):
+        return self._selected_idx
+
+    @selected_idx.setter
+    def selected_idx(self, idx: int):
         assert 0 <= idx < len(self._cards)
-        self._cards[self._selected].selected = False
-        self._selected = idx
-        self._cards[self._selected].selected = True
+        self._cards[self._selected_idx].selected = False
+        self._selected_idx = idx
+        self._cards[self._selected_idx].selected = True
 
     def next(self):
-        if self.selected == len(self._cards) - 1:
+        if self.selected_idx == len(self._cards) - 1:
             if self.wrap:
-                self.selected = 0
+                self.selected_idx = 0
             else:
                 return
         else:
-            self.selected += 1
+            self.selected_idx += 1
 
     def prev(self):
-        if self.selected == 0:
+        if self.selected_idx == 0:
             if self.wrap:
-                self.selected = len(self._cards) - 1
+                self.selected_idx = len(self._cards) - 1
             else:
                 return
         else:
-            self.selected -= 1
+            self.selected_idx -= 1
 
 
 HR_BAR = ('grey', '—' * 20)
