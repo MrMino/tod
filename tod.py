@@ -95,6 +95,9 @@ class TaskCard(Label):
             HR_BAR
         ])
 
+    def run_action(self):
+        return self._task.action(self._task)
+
 
 class TUI(Application):
     def __init__(self):
