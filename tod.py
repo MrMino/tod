@@ -1,14 +1,16 @@
 from dataclasses import dataclass
 
 from prompt_toolkit import Application
-from prompt_toolkit.layout import Layout
+from prompt_toolkit.layout import Layout, ConditionalContainer
 from prompt_toolkit.styles import Style
 from prompt_toolkit.key_binding import KeyBindings
 
 from prompt_toolkit.formatted_text import FormattedText
-from prompt_toolkit.widgets import Label
+from prompt_toolkit.widgets import Label, Dialog, Button
 
 from prompt_toolkit.layout.containers import HSplit
+
+from prompt_toolkit.filters import Condition
 
 from typing import Optional, List, Callable, Any
 
@@ -25,6 +27,24 @@ class Task:
 
 
 placeholder = Task('No tasks yet...', '', 'grey')
+
+
+class NoActionDialog(ConditionalContainer):
+    def __init__(self):
+        self.dialog = Dialog(
+            body=Label("Task has no action associated"),
+            title="🙄",
+            buttons=[Button("Ok", handler=self.hide)]
+        )
+        self.visible = False
+
+        super().__init__(self.dialog, filter=Condition(lambda: self.visible))
+
+    def hide(self):
+        self.visible = False
+
+    def show(self):
+        self.visible = True
 
 
 class TaskList(HSplit):
