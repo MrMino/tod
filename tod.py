@@ -13,12 +13,15 @@ from prompt_toolkit.layout.containers import HSplit
 from typing import Optional, List, Callable, Any
 
 
+TaskAction = Callable[['Task'], Any]
+
+
 @dataclass
 class Task:
     summary: str
     description: str
     color: str
-    action: Optional[Callable[['Task'], Any]] = None
+    action: Optional[TaskAction] = None
 
 
 placeholder = Task('No tasks yet...', '', 'grey')
