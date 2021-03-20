@@ -143,7 +143,9 @@ class TUI(Application):
             Task('task5, summary', "Longer description", "gray"),
             Task('task6, summary', "Longer description", "darkmagenta"),
         ]
-        self.tasklist = TaskList(tasks)
+        self.tasklist = TaskList(
+            tasks, default_action=lambda t: no_action_dialog.show()
+        )
 
         layout = Layout(
             FloatContainer(
