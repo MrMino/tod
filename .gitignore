@@ -1,3 +1,6 @@
+# YouCompleteMe settings
+.ycm_extra_conf.py
+
 # Built packages
 *.tar.gz
 *.whl
