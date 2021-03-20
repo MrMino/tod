@@ -153,8 +153,8 @@ class TUI(Application):
                 floats=[Float(no_action_dialog)]
             )
         )
-        style = Style([
-        ])
+
+        style = Style([])
         key_bindings = KeyBindings()
 
         key_bindings.add('q')(self.kb_exit_gracefully)
