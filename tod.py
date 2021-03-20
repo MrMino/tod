@@ -48,11 +48,12 @@ class NoActionDialog(ConditionalContainer):
 
 
 class TaskList(HSplit):
-    def __init__(self, tasks: Optional[List[Task]] = None, wrap=True):
+    def __init__(self, tasks: Optional[List[Task]] = None, wrap=True,
+                 default_action: TaskAction = lambda t: None):
         if tasks is None:
             tasks = [placeholder]
 
-        self._cards = [TaskCard(task) for task in tasks]
+        self._cards = [TaskCard(task, default_action) for task in tasks]
 
         self._selected_idx = 0
         self._cards[self._selected_idx].selected = True
@@ -99,8 +100,9 @@ HR_BAR = ('grey', '—' * 20)
 
 
 class TaskCard(Label):
-    def __init__(self, task):
+    def __init__(self, task, default_action: TaskAction):
         self.selected = False
+        self._default_action = default_action
         self._task = task
         self._summary_style = (
             f"{self._task.color} {'bold' if self.selected else ''}"
@@ -124,7 +126,7 @@ class TaskCard(Label):
 
     def run_action(self):
         if self._task.action is None:
-            return
+            return self._default_action(self._task)
         return self._task.action(self._task)
 
 
