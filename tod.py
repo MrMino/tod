@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
 from prompt_toolkit import Application
-from prompt_toolkit.layout import Layout, ConditionalContainer
+from prompt_toolkit.layout import (Layout, ConditionalContainer,
+                                   FloatContainer, Float)
 from prompt_toolkit.styles import Style
 from prompt_toolkit.key_binding import KeyBindings
 
@@ -132,6 +133,8 @@ class TaskCard(Label):
 
 class TUI(Application):
     def __init__(self):
+        no_action_dialog = NoActionDialog()
+
         tasks = [
             Task('task1, summary', "Longer description", "lightblue"),
             Task('task2, summary', "Longer description", "orange"),
@@ -143,7 +146,10 @@ class TUI(Application):
         self.tasklist = TaskList(tasks)
 
         layout = Layout(
-            self.tasklist
+            FloatContainer(
+                content=self.tasklist,
+                floats=[Float(no_action_dialog)]
+            )
         )
         style = Style([
         ])
