@@ -155,22 +155,28 @@ class TUI(Application):
         )
 
         style = Style([])
+        self.key_bindings = self._init_keybindings()
+
+        super().__init__(
+            layout, style, key_bindings=self.key_bindings, full_screen=True
+        )
+
+    def _init_keybindings(self):
         key_bindings = KeyBindings()
 
         key_bindings.add('q')(self.kb_exit_gracefully)
         key_bindings.add('escape')(self.kb_exit_gracefully)
+        key_bindings.add('enter')(self.kb_run_action)
+
         key_bindings.add('c-d')(self.kb_exit_gracefully)
         key_bindings.add('c-c')(self.kb_exit_gracefully)
 
         key_bindings.add('f12')(self.kb_debug)
 
         key_bindings.add('up')(self.kb_item_up)
+        key_bindings.add('k')(self.kb_item_up)
         key_bindings.add('down')(self.kb_item_down)
-        key_bindings.add('enter')(self.kb_run_action)
-
-        super().__init__(
-            layout, style, key_bindings=key_bindings, full_screen=True
-        )
+        key_bindings.add('j')(self.kb_item_down)
 
     def kb_exit_gracefully(self, _):
         self.exit(0)
