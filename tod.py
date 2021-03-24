@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 
 from prompt_toolkit import Application
 from prompt_toolkit.layout import (Layout, ConditionalContainer,
@@ -13,18 +12,9 @@ from prompt_toolkit.layout.containers import HSplit
 
 from prompt_toolkit.filters import Condition
 
-from typing import Optional, List, Callable, Any
+from typing import Optional, List
 
-
-TaskAction = Callable[['Task'], Any]
-
-
-@dataclass
-class Task:
-    summary: str
-    description: str
-    color: str
-    action: Optional[TaskAction] = None
+from .tasks import Task, TaskAction
 
 
 placeholder = Task('No tasks yet...', '', 'grey')
