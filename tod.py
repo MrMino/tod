@@ -168,6 +168,8 @@ class TUI(Application):
         key_bindings.add('down')(self.kb_item_down)
         key_bindings.add('j')(self.kb_item_down)
 
+        return key_bindings
+
     def kb_exit_gracefully(self, _):
         self.exit(0)
 
