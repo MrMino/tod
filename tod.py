@@ -12,9 +12,9 @@ from prompt_toolkit.layout.containers import HSplit
 
 from prompt_toolkit.filters import Condition
 
-from typing import Optional, List
-
 from .tasks import Task, TaskAction
+
+from typing import Optional, List
 
 
 placeholder = Task('No tasks yet...', '', 'grey')
