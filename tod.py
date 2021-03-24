@@ -13,6 +13,7 @@ from prompt_toolkit.layout.containers import HSplit
 from prompt_toolkit.filters import Condition
 
 from .tasks import Task, TaskAction
+from .actions import OpenOrStart
 
 from typing import Optional, List
 
@@ -126,7 +127,8 @@ class TUI(Application):
         no_action_dialog = NoActionDialog()
 
         tasks = [
-            Task('task1, summary', "Longer description", "lightblue"),
+            Task('task1, summary', "Longer description", "lightblue",
+                 action=OpenOrStart('https://github.com/')),
             Task('task2, summary', "Longer description", "orange"),
             Task('task3, summary', "Longer description", "lightgreen"),
             Task('task4, summary', "Longer description", "darkred"),
