@@ -14,12 +14,13 @@ class OpenOrStart(TaskAction):
         self.path = path
 
     def __call__(self, _: Task):
-        if platform.system == 'Windows':
+        system = platform.system()
+        if system == 'Windows':
             # MyPy reports this as invalid since it's not available on Linux
             os.startfile(self.path)  # type: ignore
-        elif platform.system == 'Linux':
+        elif system == 'Linux':
             subprocess.Popen(['xdg-open', str(self.path)], close_fds=True)
-        elif platform.system == 'Darwin':
+        elif system == 'Darwin':
             subprocess.Popen(['open', str(self.path)], close_fds=True)
         else:
             raise RuntimeError(f"Unsupported platform: {platform.system}.")
