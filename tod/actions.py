@@ -19,3 +19,7 @@ class OpenOrStart(TaskAction):
             os.startfile(self.path)  # type: ignore
         elif platform.system == 'Linux':
             subprocess.Popen(['xdg-open', str(self.path)], close_fds=True)
+        elif platform.system == 'Darwin':
+            subprocess.Popen(['open', str(self.path)], close_fds=True)
+        else:
+            raise RuntimeError(f"Unsupported platform: {platform.system}.")
