@@ -186,6 +186,3 @@ class TUI(Application):
 
     def kb_run_action(self, _):
         self.tasklist.selected_card.run_action()
-
-
-TUI().run()
