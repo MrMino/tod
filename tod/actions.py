@@ -3,12 +3,12 @@ import subprocess
 import platform
 from pathlib import Path
 
-from .tasks import Task, TaskAction
+from .tasks import Task
 
 from typing import Union
 
 
-class OpenOrStart(TaskAction):
+class OpenOrStart:
     """Same as double clicking on a file"""
     def __init__(self, path: Union[str, Path]):
         self.path = path
