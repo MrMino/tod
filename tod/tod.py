@@ -127,7 +127,9 @@ class TaskCard(Label):
 
 class TUI(Application):
     def __init__(self):
-        no_action_dialog = NoActionDialog()
+        self.no_action_dialog = NoActionDialog(
+            ok_btn_cb=self.kb_run_action_or_dismiss
+        )
         self.key_bindings = self._init_keybindings()
 
         tasks = [
@@ -140,13 +142,13 @@ class TUI(Application):
             Task('task6, summary', "Longer description", "darkmagenta"),
         ]
         self.tasklist = TaskList(
-            tasks, default_action=lambda t: no_action_dialog.show()
+            tasks, default_action=lambda t: self.no_action_dialog.show()
         )
 
         layout = Layout(
             FloatContainer(
                 content=self.tasklist,
-                floats=[Float(no_action_dialog)]
+                floats=[Float(self.no_action_dialog)]
             )
         )
 
@@ -161,7 +163,7 @@ class TUI(Application):
 
         key_bindings.add('q')(self.kb_exit_gracefully)
         key_bindings.add('escape')(self.kb_exit_gracefully)
-        key_bindings.add('enter')(self.kb_run_action)
+        key_bindings.add('enter')(self.kb_run_action_or_dismiss)
 
         key_bindings.add('c-d')(self.kb_exit_gracefully)
         key_bindings.add('c-c')(self.kb_exit_gracefully)
@@ -187,5 +189,8 @@ class TUI(Application):
     def kb_item_down(self, _):
         self.tasklist.next()
 
-    def kb_run_action(self, _):
-        self.tasklist.selected_card.run_action()
+    def kb_run_action_or_dismiss(self, _=None):
+        if self.no_action_dialog.visible:
+            self.no_action_dialog.hide()
+        else:
+            self.tasklist.selected_card.run_action()
