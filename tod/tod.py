@@ -14,18 +14,22 @@ from prompt_toolkit.filters import Condition
 from .tasks import Task, TaskAction
 from .actions import OpenOrStart
 
-from typing import Optional, List
+from typing import Optional, List, Callable
 
 
 placeholder = Task('No tasks yet...', '', 'grey')
 
 
 class NoActionDialog(ConditionalContainer):
-    def __init__(self):
+    def __init__(self, ok_btn_cb: Callable[[], None] = None):
+        if ok_btn_cb is None:
+            ok_btn_cb = self.hide
+
         self.dialog = Dialog(
             body=Label("Task has no action associated"),
             title="🙄",
-            buttons=[Button("Ok", handler=self.hide)]
+            buttons=[Button("Ok", handler=ok_btn_cb)],
+            modal=True
         )
         self.visible = False
 
