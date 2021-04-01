@@ -164,6 +164,7 @@ class TUI(Application):
         key_bindings.add('q')(self.kb_exit_gracefully)
         key_bindings.add('escape')(self.kb_exit_gracefully)
         key_bindings.add('enter')(self.kb_run_action_or_dismiss)
+        key_bindings.add('a')(self.kb_run_action_or_dismiss)
 
         key_bindings.add('c-d')(self.kb_exit_gracefully)
         key_bindings.add('c-c')(self.kb_exit_gracefully)
