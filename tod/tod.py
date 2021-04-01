@@ -124,6 +124,7 @@ class TaskCard(Label):
 class TUI(Application):
     def __init__(self):
         no_action_dialog = NoActionDialog()
+        self.key_bindings = self._init_keybindings()
 
         tasks = [
             Task('task1, summary', "Longer description", "lightblue",
@@ -146,7 +147,6 @@ class TUI(Application):
         )
 
         style = Style([])
-        self.key_bindings = self._init_keybindings()
 
         super().__init__(
             layout, style, key_bindings=self.key_bindings, full_screen=True
